@@ -1,0 +1,28 @@
+{
+  "name": "google-spreadsheet-cron",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
+    "google-auth-library": "^8.9.0",
+    "google-spreadsheet": "^4.0.2",
+    "googleapis": "^126.0.1",
+    "next": "13.4.19",
+    "nodemailer": "^6.9.4",
+    "react": "18.2.0",
+    "react-compound-slider": "^3.4.0",
+    "react-dom": "18.2.0",
+    "react-dual-range-slider": "^1.0.1",
+    "typescript": "5.2.2"
+  }
+}
