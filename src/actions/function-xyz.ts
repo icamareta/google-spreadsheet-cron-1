@@ -12,7 +12,7 @@ const serviceAccountAuth = new JWT({
 });
 
 const doc = new GoogleSpreadsheet(
-  process.env.ID_SPREADSHEET as string,
+  "1vcXzhW0fD0jKJCNDZ28Vh-JFZStHJ-Lo-sVUYGA0woA" as string,
   serviceAccountAuth
 );
 
@@ -22,7 +22,7 @@ export async function getValues(min: number, max: number) {
   try {
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle[process.env.NAMA_SHEET as string];
+    const sheet = doc.sheetsByTitle["NGAGEL" as string];
     const rows = await sheet.getRows();
 
     for (let index = min; index <= max; index++) {
