@@ -9,14 +9,18 @@ export default function Home() {
   const [maxVal, setMaxVal] = useState(1);
 
   const handleMinMaxVal = async () => {
-    await getValues(minVal, maxVal)
-      .then((value) => {
-        console.log("Success get values");
-        console.log(value)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await fetch(
+      "https://google-spreadsheet-cron-1.vercel.app/api?min-val=" +
+        minVal +
+        "&max-val=" +
+        maxVal
+    ).then((value) => {
+      console.log("value");
+      console.log(value);
+    }).catch((error) => {
+      console.log("error")
+      console.log(error)
+    });
   };
 
   return (
