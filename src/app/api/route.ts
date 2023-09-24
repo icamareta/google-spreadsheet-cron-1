@@ -1,5 +1,3 @@
-"use server";
-
 import { NextRequest, NextResponse } from "next/server";
 import { useSearchParams } from "next/navigation";
 import { getValues } from "@/actions/function-xyz";
