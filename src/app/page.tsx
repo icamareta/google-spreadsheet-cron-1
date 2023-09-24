@@ -1,8 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import { ButtonHTMLAttributes, useState } from "react";
-import { getValues } from "../actions/function-xyz";
+import { useState } from "react";
 
 export default function Home() {
   const [minVal, setMinVal] = useState(0);
