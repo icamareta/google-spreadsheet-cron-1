@@ -11,15 +11,13 @@ export async function GET(request: NextRequest) {
   console.log(minVal);
   console.log(maxVal);
 
-  return NextResponse.json({ value: "" });
-
-  //   return await getValues(+minVal, +maxVal)
-  //     .then((value) => {
-  //       console.log("Success get values");
-  //       console.log(value);
-  //       return NextResponse.json(value);
-  //     })
-  //     .catch((error) => {
-  //       return NextResponse.json(error);
-  //     });
+  return await getValues(+minVal, +maxVal)
+    .then((value) => {
+      console.log("Success get values");
+      console.log(value);
+      return NextResponse.json(value);
+    })
+    .catch((error) => {
+      return NextResponse.json(error);
+    });
 }
