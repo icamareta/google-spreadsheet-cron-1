@@ -41,7 +41,7 @@ export async function getValues(min: number, max: number) {
           const nomorSlot = element.get("SLOT");
           const jumlah = element.get("JML PESERTA");
           const sewa = element.get("Sewa");
-          const shop = element.get("KELAS POUND") || "-";
+          const shop = element.get("Shop Now ! Thanks later ❤️") || "-";
 
           const email = element.get("EMAIL");
           const subject = "Pendaftaran Sukses";
