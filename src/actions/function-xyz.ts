@@ -33,7 +33,9 @@ export async function getValues(min: number, max: number) {
       console.log("Function called");
 
       if (!(!status || status === "")) {
-        if (status.toLowerCase() == "ok" && element.get("EMAIL") != "") {
+        console.log("PASS 1")
+        if ((status.toLowerCase() == "ok" || status.toLowerCase() == "send") && element.get("EMAIL") != "") {
+          console.log("PASS 2")
           console.log(element);
 
           const nama = element.get("NAMA");
@@ -84,7 +86,7 @@ export async function getValues(min: number, max: number) {
               .then(() => {
                 const thisCell = sheet.getCellByA1(`K${index}`);
                 thisCell.backgroundColor = {
-                  red: 0.80,
+                  red: 0.8,
                   green: 0.98,
                   blue: 0.81,
                 };
@@ -102,6 +104,7 @@ export async function getValues(min: number, max: number) {
       }
     }
   } catch (error) {
+    console.log("something error!");
     console.log(error);
     throw error;
   }

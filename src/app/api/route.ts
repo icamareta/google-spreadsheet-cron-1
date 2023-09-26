@@ -18,6 +18,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(value);
     })
     .catch((error) => {
+      console.log("API error");
+      console.log(error);
       return NextResponse.json(error);
     });
 }
