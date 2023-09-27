@@ -85,7 +85,7 @@ export async function getValues(min: number, max: number) {
             "Let's Get Rock Together!!!";
 
           await sendMail(email, subject, html).then(async () => {
-            element.set("SEND", "Email Terkirim");
+            // element.set("SEND", "Email Terkirim");
             await sheet
               .loadCells(`K${index}`)
               .then(() => {
@@ -95,12 +95,13 @@ export async function getValues(min: number, max: number) {
                   green: 0.98,
                   blue: 0.81,
                 };
+                thisCell.value = "Email Terkirim"
                 thisCell.save();
               })
               .catch((reason) => {
                 console.log("error sending email");
                 console.log(reason);
-                if (!EmailValidator.validate("test@email.com")) {
+                if (!EmailValidator.validate(email)) {
                   const thisCell = sheet.getCellByA1(`K${index}`);
                   thisCell.backgroundColor = {
                     red: 1.0,
