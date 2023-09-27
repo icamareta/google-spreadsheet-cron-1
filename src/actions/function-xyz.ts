@@ -13,7 +13,7 @@ const serviceAccountAuth = new JWT({
 });
 
 const doc = new GoogleSpreadsheet(
-  // Ganti ID Google Spreadsheet 
+  // Ganti ID Google Spreadsheet
   "14avSx--KfEGdmwBcysd3XQNGfsGNTpCAHm3UppjriWU" as string,
   serviceAccountAuth
 );
@@ -84,37 +84,42 @@ export async function getValues(min: number, max: number) {
             "See u there!<br />" +
             "Let's Get Rock Together!!!";
 
-          await sendMail(email, subject, html).then(async () => {
-            // element.set("SEND", "Email Terkirim");
-            await sheet
-              .loadCells(`K${index}`)
-              .then(() => {
-                const thisCell = sheet.getCellByA1(`K${index}`);
-                thisCell.backgroundColor = {
-                  red: 0.8,
-                  green: 0.98,
-                  blue: 0.81,
-                };
-                thisCell.value = "Email Terkirim"
-                thisCell.save();
-              })
-              .catch((reason) => {
-                console.log("error sending email");
-                console.log(reason);
-                if (!EmailValidator.validate(email)) {
+          await sendMail(email, subject, html)
+            .then(async () => {
+              // element.set("SEND", "Email Terkirim");
+              await sheet
+                .loadCells(`K${index}`)
+                .then(() => {
                   const thisCell = sheet.getCellByA1(`K${index}`);
                   thisCell.backgroundColor = {
-                    red: 1.0,
-                    green: 0.8,
-                    blue: 0.79,
+                    red: 0.8,
+                    green: 0.98,
+                    blue: 0.81,
                   };
+                  thisCell.value = "Email Terkirim";
                   thisCell.save();
-                }
-              })
-              .finally(() => {
-                element.save();
-              });
-          });
+                })
+                .catch((reason) => {
+                  console.log("error sending email");
+                  console.log(reason);
+                  if (!EmailValidator.validate(email)) {
+                    const thisCell = sheet.getCellByA1(`K${index}`);
+                    thisCell.backgroundColor = {
+                      red: 1.0,
+                      green: 0.8,
+                      blue: 0.79,
+                    };
+                    thisCell.save();
+                  }
+                  throw new Error("Error sending email!");
+                })
+                .finally(() => {
+                  element.save();
+                });
+            })
+            .catch((error: any) => {
+              throw error;
+            });
         }
       }
     }
