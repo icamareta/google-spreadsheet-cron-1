@@ -3,6 +3,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
 import { sendMail } from "./send-mail";
+import * as EmailValidator from "email-validator";
 
 const serviceAccountAuth = new JWT({
   email:
@@ -12,7 +13,8 @@ const serviceAccountAuth = new JWT({
 });
 
 const doc = new GoogleSpreadsheet(
-  "1OImRcwBEeKrUydvwyj7l6I6QYHD8x1BmATuHJJUZ4oY" as string,
+  // Ganti ID Google Spreadsheet 
+  "14avSx--KfEGdmwBcysd3XQNGfsGNTpCAHm3UppjriWU" as string,
   serviceAccountAuth
 );
 
@@ -33,9 +35,12 @@ export async function getValues(min: number, max: number) {
       console.log("Function called");
 
       if (!(!status || status === "")) {
-        console.log("PASS 1")
-        if ((status.toLowerCase() == "ok" || status.toLowerCase() == "send") && element.get("EMAIL") != "") {
-          console.log("PASS 2")
+        console.log("PASS 1");
+        if (
+          (status.toLowerCase() == "ok" || status.toLowerCase() == "send") &&
+          element.get("EMAIL") != ""
+        ) {
+          console.log("PASS 2");
           console.log(element);
 
           const nama = element.get("NAMA");
@@ -95,6 +100,15 @@ export async function getValues(min: number, max: number) {
               .catch((reason) => {
                 console.log("error sending email");
                 console.log(reason);
+                if (!EmailValidator.validate("test@email.com")) {
+                  const thisCell = sheet.getCellByA1(`K${index}`);
+                  thisCell.backgroundColor = {
+                    red: 1.0,
+                    green: 0.8,
+                    blue: 0.79,
+                  };
+                  thisCell.save();
+                }
               })
               .finally(() => {
                 element.save();
