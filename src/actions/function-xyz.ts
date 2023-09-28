@@ -97,38 +97,40 @@ export async function getValues(min: number, max: number) {
           // } else {
           await sendMail(email, subject, html)
             .then(async (value) => {
-              // element.set("SEND", "Email Terkirim");
               console.log("mail value");
-              console.log(value);
-              await sheet
-                .loadCells(`K${index}`)
-                .then(async () => {
-                  const thisCell = sheet.getCellByA1(`K${index}`);
-                  thisCell.backgroundColor = {
-                    red: 0.8,
-                    green: 0.98,
-                    blue: 0.81,
-                  };
-                  thisCell.value = "Email Terkirim";
-                  await thisCell.save();
-                })
-                .catch(async (reason) => {
-                  console.log("error sending email");
-                  console.log(reason);
-                  if (!EmailValidator.validate(email)) {
+              if (value === "object") {
+                await sheet
+                  .loadCells(`K${index}`)
+                  .then(async () => {
                     const thisCell = sheet.getCellByA1(`K${index}`);
                     thisCell.backgroundColor = {
-                      red: 1.0,
-                      green: 0.8,
-                      blue: 0.79,
+                      red: 0.8,
+                      green: 0.98,
+                      blue: 0.81,
                     };
+                    thisCell.value = "Email Terkirim";
+                    element.set("SEND", "Email Terkirim");
                     await thisCell.save();
-                  }
-                  throw new Error("Error sending email!");
-                })
-                .finally(async () => {
-                  await element.save();
-                });
+                    await element.save();
+                  })
+                  .catch(async (reason) => {
+                    console.log("error sending email");
+                    console.log(reason);
+                    if (!EmailValidator.validate(email)) {
+                      const thisCell = sheet.getCellByA1(`K${index}`);
+                      thisCell.backgroundColor = {
+                        red: 1.0,
+                        green: 0.8,
+                        blue: 0.79,
+                      };
+                      await thisCell.save();
+                    }
+                    throw new Error("Error sending email!");
+                  })
+                  .finally(async () => {
+                    await element.save();
+                  });
+              }
             })
             .catch((error: any) => {
               throw error;
