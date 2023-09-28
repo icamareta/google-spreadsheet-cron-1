@@ -99,6 +99,7 @@ export async function getValues(min: number, max: number) {
             .then(async (value) => {
               console.log("mail value");
               if (value === "object") {
+                console.log("success mail value");
                 await sheet
                   .loadCells(`K${index}`)
                   .then(async () => {
