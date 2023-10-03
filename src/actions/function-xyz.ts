@@ -28,20 +28,30 @@ export async function getValues(min: number, max: number) {
     const rows = await sheet.getRows();
 
     for (let index = min; index <= max; index++) {
-      console.log(index);
+      // console.log(index);
       const element = rows[index - 2];
       const status = element.get("CEK");
 
-      console.log("Function called");
-
-      if (!(!status || status === "")) {
-        console.log("PASS 1");
+      if (!EmailValidator.validate(element.get("EMAIL"))) {
+        await sheet.loadCells(`K${index}`).then(async () => {
+          const thisCell = sheet.getCellByA1(`K${index}`);
+          thisCell.backgroundColor = {
+            red: 1.0,
+            green: 0.8,
+            blue: 0.79,
+          };
+          element.set("SEND", "Email tidak valid");
+          element.save();
+          await thisCell.save();
+        });
+      } else if (!(!status || status === "")) {
+        // console.log("PASS 1");
         if (
           (status.toLowerCase() == "ok" || status.toLowerCase() == "send") &&
           element.get("EMAIL") != ""
         ) {
-          console.log("PASS 2");
-          console.log(element);
+          // console.log("PASS 2");
+          // console.log(element);
 
           const nama = element.get("NAMA");
           const kelasPound = element.get("KELAS POUND");
@@ -86,7 +96,7 @@ export async function getValues(min: number, max: number) {
           // console.log(EmailValidator.validate(email));
           await sendMail(email, subject, html)
             .then(async (value) => {
-              console.log("mail value");
+              // console.log("mail value");
               await sheet
                 .loadCells(`K${index}`)
                 .then(async () => {
@@ -130,11 +140,12 @@ export async function getValues(min: number, max: number) {
           };
           await thisCell.save();
         }
+      } else {
       }
     }
   } catch (error) {
     console.log("something error!");
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 }
