@@ -13,13 +13,15 @@ export default function Home() {
         minVal +
         "&max-val=" +
         maxVal
-    ).then((value) => {
-      console.log("value");
-      console.log(value);
-    }).catch((error) => {
-      console.log("error")
-      console.log(error)
-    });
+    )
+      .then((value) => {
+        console.log("value");
+        console.log(value);
+      })
+      .catch((error) => {
+        console.log("error");
+        console.log(error);
+      });
   };
 
   return (

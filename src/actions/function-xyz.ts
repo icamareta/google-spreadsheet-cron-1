@@ -83,60 +83,52 @@ export async function getValues(min: number, max: number) {
             "Untuk pertanyaan lainnya hub WA:08113377373 (chat ONLY) .<br /><br /> " +
             "See u there!<br />" +
             "Let's Get Rock Together!!!";
-
-          console.log(EmailValidator.validate(email));
-
-          // if (!EmailValidator.validate(email)) {
-          //   const thisCell = sheet.getCellByA1(`K${index}`);
-          //   thisCell.backgroundColor = {
-          //     red: 1.0,
-          //     green: 0.8,
-          //     blue: 0.79,
-          //   };
-          //   thisCell.save();
-          // } else {
+          // console.log(EmailValidator.validate(email));
           await sendMail(email, subject, html)
             .then(async (value) => {
               console.log("mail value");
-              if (value === "object") {
-                console.log("success mail value");
-                await sheet
-                  .loadCells(`K${index}`)
-                  .then(async () => {
+              await sheet
+                .loadCells(`K${index}`)
+                .then(async () => {
+                  const thisCell = sheet.getCellByA1(`K${index}`);
+                  thisCell.backgroundColor = {
+                    red: 0.8,
+                    green: 0.98,
+                    blue: 0.81,
+                  };
+                  // thisCell.value = "Email Terkirim";
+                  element.set("SEND", "Email Terkirim");
+                  await thisCell.save();
+                })
+                .catch(async (reason) => {
+                  console.log("error sending email");
+                  console.log(reason);
+                  if (!EmailValidator.validate(email)) {
                     const thisCell = sheet.getCellByA1(`K${index}`);
                     thisCell.backgroundColor = {
-                      red: 0.8,
-                      green: 0.98,
-                      blue: 0.81,
+                      red: 1.0,
+                      green: 0.8,
+                      blue: 0.79,
                     };
-                    thisCell.value = "Email Terkirim";
-                    element.set("SEND", "Email Terkirim");
                     await thisCell.save();
-                    await element.save();
-                  })
-                  .catch(async (reason) => {
-                    console.log("error sending email");
-                    console.log(reason);
-                    if (!EmailValidator.validate(email)) {
-                      const thisCell = sheet.getCellByA1(`K${index}`);
-                      thisCell.backgroundColor = {
-                        red: 1.0,
-                        green: 0.8,
-                        blue: 0.79,
-                      };
-                      await thisCell.save();
-                    }
-                    throw new Error("Error sending email!");
-                  })
-                  .finally(async () => {
-                    await element.save();
-                  });
-              }
+                  }
+                  throw new Error("Error sending email!");
+                })
+                .finally(async () => {
+                  await element.save();
+                });
             })
             .catch((error: any) => {
               throw error;
             });
-          // }
+        } else {
+          const thisCell = sheet.getCellByA1(`K${index}`);
+          thisCell.backgroundColor = {
+            red: 1.0,
+            green: 0.8,
+            blue: 0.79,
+          };
+          await thisCell.save();
         }
       }
     }
