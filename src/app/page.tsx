@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleMinMaxVal = async () => {
     await fetch(
-      "https://google-spreadsheet-cron-1.vercel.app/api?min-val=" +
+      "https://google-spreadsheet-cron-1-taupe.vercel.app/api?min-val=" +
         minVal +
         "&max-val=" +
         maxVal
